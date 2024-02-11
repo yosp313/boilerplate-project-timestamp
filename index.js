@@ -26,15 +26,14 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date", (req, res) => {
   const date = req.params.date;
   let dateObject = new Date(date);
+  if(date === " "){
+    dateObject = new Date();
+  }
   if (dateObject.toString() === "Invalid Date") {
     dateObject = new Date(parseInt(date));
   }
   if (dateObject.toString() === "Invalid Date") {
-    res.json({ error: "Invalid Date" });
-  }
-  if (date === " ") {
-    dateObject = new Date();
-    res.json({ unix: dateObject.getTime(), utc: dateObject.toUTCString() });
+    return res.json({ error: "Invalid Date" });
   }
   res.json({ unix: dateObject.getTime(), utc: dateObject.toUTCString() });
 });
