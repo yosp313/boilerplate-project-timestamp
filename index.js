@@ -26,9 +26,6 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date", (req, res) => {
   const date = req.params.date;
   let dateObject = new Date(date);
-  if(date === " "){
-    dateObject = new Date();
-  }
   if (dateObject.toString() === "Invalid Date") {
     dateObject = new Date(parseInt(date));
   }
@@ -37,6 +34,11 @@ app.get("/api/:date", (req, res) => {
   }
   res.json({ unix: dateObject.getTime(), utc: dateObject.toUTCString() });
 });
+
+app.get("/api/", (req, res) => {
+  const dateObject = new Date()
+  res.json({ unix: dateObject.getTime(), utc: dateObject.toUTCString() });
+})
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, function () {
